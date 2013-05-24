@@ -1,0 +1,84 @@
+set noeb
+set nocp
+filetype plugin on
+
+set tags=tags;
+set autochdir
+
+
+syntax on
+set number
+set nocompatible
+set backspace=indent,eol,start
+filetype on  
+set ru
+set history=1000
+set showmatch
+set hlsearch
+
+set nobackup
+setlocal noswapfile
+"set bufhidden=hide
+
+set tabstop=4
+
+
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
+set cursorline
+
+"set spell 
+
+
+
+"进行Tlist的设置
+""TlistUpdate可以更新tags
+map <F4> :silent! Tlist<CR> "按下F3就可以呼出了
+let Tlist_Ctags_Cmd='ctags' "因为我们放在环境变量里，所以可以直接执行
+let Tlist_Use_Right_Window=1 "让窗口显示在右边，0的话就是显示在左边
+let Tlist_Show_One_File=0 "让taglist可以同时展示多个文件的函数列表，如果想只有1个，设置为1
+let Tlist_File_Fold_Auto_Close=1 "非当前文件，函数列表折叠隐藏
+let Tlist_Exit_OnlyWindow=1 "当taglist是最后一个分割窗口时，自动推出vim
+let Tlist_Process_File_Always=0 "是否一直处理tags.1:处理;0:不处理。不是一直实时更新tags，因为没有必要
+let Tlist_Inc_Winwidth=0
+let Tlist_WinWidth=30
+
+
+" tagbar config
+nmap <F3> :TagbarToggle<CR>
+let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_left = 0
+let g:tagbar_autoshowtag = 0
+let g:tagbar_width=25
+"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+
+
+
+"F7 NERDTree
+map <F2> :NERDTreeToggle<CR>
+imap <F2> <ESC>:NERDTreeToggle<CR>
+
+
+
+set completeopt=menu
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+
+
+
+" key map
+map z :q!<CR> 
+map m :w<CR>
+map , :wq!<CR>
+
+
+
+
+
+
+
+
+
+
