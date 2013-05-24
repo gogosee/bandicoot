@@ -1,0 +1,34 @@
+
+------------------------- install -----------------------
+
+1) Unzip the plugin to ~/.vim (unix) or %HOMEPATH%\vimfiles (windows) 
+2) Run Vim and type the following command : 
+
+:helptags $HOME/.vim/doc 
+
+or 
+
+:helptags $HOME/vimfiles/doc 
+
+3) Type :h omnicppcomplete and please read the installation paragraph.
+
+
+----------------------- config ---------------------------
+
+$ vim ~/.vimrc
+add:
+
+set nocp
+filetype plugin on
+set completeopt=menu
+
+
+$ vim ~/.ctags
+
+--c++-kinds=+p : 为标签添加函数原型(prototype)信息
+--fields=+iaS : 为标签添加继承信息(inheritance)，访问控制(access)信息，函数特征(function Signature,如参数表或原型等)
+--extra=+q : 为类成员标签添加类标识
+
+
+---------------------- use ----------------------------
+ctags -R
