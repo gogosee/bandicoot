@@ -1,0 +1,13 @@
+Cppunittest is one of the simplest example for CppUnit.
+
+Announce: use as your owner risk.
+Compile : 
+	After install CppUnit, you can use the follow command to complie:
+		g++ -lcppunit MathTest.cpp main.cpp
+	(Maybe you shall run " ldconfig -v " as root, after you install CppUnit)
+
+Run     : ./a.out
+Test    : RedHat 8.0 CppUnit1.8.0
+Author  : liqun (liqun@nsfocus.com liqun111@yahoo.com)
+Data    : 2003-7-5
+
