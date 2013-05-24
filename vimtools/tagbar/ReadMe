@@ -1,0 +1,23 @@
+
+
+---------------------- install -------------------
+vim tagbar.vba 
+:so % 
+:q 
+
+
+
+--------------------- config ---------------------
+$ vim ~/.vimrc
+and append config like this:
+
+nmap <F3> :TagbarToggle<CR>
+let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_width=30
+autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+
+
+
+-------------------- reference -------------
+http://www.vim.org/scripts/script.php?script_id=3465
+http://blog.csdn.net/dx2880/article/details/7868623
