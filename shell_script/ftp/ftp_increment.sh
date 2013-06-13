@@ -4,11 +4,11 @@ FTP_USER=wanghb
 FTP_PASS=wanghb
 FTP_DEST_DIR=/DEVHome/wanghb/xbocs_run/bomcserver/log/ftp
 
-LOG_DIR=/home/hiram/bandicoot/shell_script/ftp
-LS_SEARCH_FILE="*.log"
-SHELL_WORK_DIR=/home/hiram/bandicoot/shell_script/ftp/ftp
-INCREMENT_FILE_NAME="log"
-INCREMENT_FILE_DIR=/home/hiram/bandicoot/shell_script/ftp/ftp/inc
+LOG_DIR=/opt/wanghb/Run/BomcServer/log
+LS_SEARCH_FILE="DataProc_*"
+SHELL_WORK_DIR=/opt/wanghb/Run/BomcServer/log/inc
+INCREMENT_FILE_NAME="DataProc_Inc"
+INCREMENT_FILE_DIR=/opt/wanghb/Run/BomcServer/log/inc/inc_log
 
 COLLECT_CYCLE=300
 IS_SAVE_INC=y
