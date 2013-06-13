@@ -83,10 +83,14 @@ getFileInfo()
 
 ### 是否是第一次运行此shell, 设置标志FIRST_TIME
 if [ ! -f "$THIS_SCRIPT_CONFIG" ]; then  
+	# 创建配置文件
 	touch $THIS_SCRIPT_CONFIG
 	FIRST_TIME=yes
 else
-#	source $THIS_SCRIPT_CONFIG
+	# 创建增量文件
+	touch $INCREMENT_FILE_NAME
+	# 创建临时配置文件
+	touch $THIS_SCRIPT_CONFIG_TMP
 	FIRST_TIME=no
 fi  
 
