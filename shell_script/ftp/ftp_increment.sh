@@ -6,7 +6,6 @@ FTP_DEST_DIR=/DEVHome/wanghb/xbocs_run/bomcserver/log/ftp
 
 LOG_DIR=/opt/wanghb/Run/BomcServer/log
 LS_SEARCH_FILE="DataProc_*"
-SHELL_WORK_DIR=/opt/wanghb/Run/BomcServer/log/inc
 INCREMENT_FILE_NAME="DataProc_Inc"
 INCREMENT_FILE_DIR=/opt/wanghb/Run/BomcServer/log/inc/inc_log
 
@@ -18,6 +17,7 @@ IS_SAVE_INC=y
 #############################################################################################
 
 FIRST_TIME=no
+SHELL_WORK_DIR=`pwd`
 THIS_SCRIPT_CONFIG=$SHELL_WORK_DIR/log.config
 THIS_SCRIPT_CONFIG_TMP=$SHELL_WORK_DIR/log.config.tmp
 
