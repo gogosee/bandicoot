@@ -24,6 +24,9 @@ SYSTEM_OS=`uname -a | awk '{print $1}'`
 
 if [ $SYSTEM_OS = "SunOS" ]; then
 	PATH=$PATH:$SHELL_WORK_DIR/bin
+	TAIL=/usr/xpg4/bin/tail
+else
+	TAIL=tail
 fi
 
 ### 获取 增量数据文件名
@@ -66,7 +69,7 @@ getIncrementData()
 		increment_size=`expr $cur_filesize - $cfg_filesize`		
 		# echo "increment_size:"$increment_size
 		# 读取增量部份, 写入增量文件
-		tail -c $increment_size $filename >> $INCREMENT_FILE_PATH
+		$TAIL -c $increment_size $filename >> $INCREMENT_FILE_PATH
 
 		# 记录文件信息到新的配置文件
 		FILE_SIZE=$(ls -l $filename | awk '{print $5}')
