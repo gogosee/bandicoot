@@ -43,9 +43,9 @@ getIncrementData()
 	# 从配置文件中读取文件大小
 	while read line	
 	do
-		cfg_filename=`echo $line|awk -F ':::' '{print $1}'`
+		cfg_filename=`echo $line|awk -F'|' '{print $1}'`
 		if [ $cfg_filename = $filename ]; then
-			cfg_filesize=`echo $line|awk -F ':::' '{print $2}'`
+			cfg_filesize=`echo $line|awk -F'|' '{print $2}'`
 			#echo $cfg_filename $cfg_filesize
 		fi
 	done < $THIS_SCRIPT_CONFIG
@@ -57,7 +57,7 @@ getIncrementData()
 
 		# 记录文件信息到新的配置文件
 		FILE_SIZE=$(ls -l $filename | awk '{print $5}')
-		echo $filename":::"$FILE_SIZE >> $THIS_SCRIPT_CONFIG_TMP
+		echo $filename"|"$FILE_SIZE >> $THIS_SCRIPT_CONFIG_TMP
 	else
 		## 读取增量部份作为
 		# 获取当前文件大小
@@ -70,7 +70,7 @@ getIncrementData()
 
 		# 记录文件信息到新的配置文件
 		FILE_SIZE=$(ls -l $filename | awk '{print $5}')
-		echo $filename":::"$FILE_SIZE >> $THIS_SCRIPT_CONFIG_TMP
+		echo $filename"|"$FILE_SIZE >> $THIS_SCRIPT_CONFIG_TMP
 	fi
 }   
 
@@ -85,7 +85,7 @@ getFileInfo()
 	# echo $FILE_SIZE
 
 	# 记录文件大小到配置文件
-	echo $filename":::"$FILE_SIZE >> $THIS_SCRIPT_CONFIG
+	echo $filename"|"$FILE_SIZE >> $THIS_SCRIPT_CONFIG
 #	echo "get file" $filename "info"
 }  
 
@@ -100,7 +100,7 @@ getNoUpdateInfo()
 	# echo $FILE_SIZE
 
 	# 记录文件大小到配置文件
-	echo $filename":::"$FILE_SIZE >> $THIS_SCRIPT_CONFIG_TMP
+	echo $filename"|"$FILE_SIZE >> $THIS_SCRIPT_CONFIG_TMP
 #	echo "get file" $filename "info"
 }  
 
