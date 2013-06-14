@@ -2,12 +2,12 @@
 FTP_SERVER=10.3.3.108 
 FTP_USER=wanghb
 FTP_PASS=wanghb
-FTP_DEST_DIR=/DEVHome/wanghb/xbocs_run/bomcserver/log/ftp
+FTP_DEST_DIR=/DEVHome/wanghb/xbocs_run/bomcserver/log/ftp2
 
-LOG_DIR=/opt/wanghb/Run/BomcServer/log
-LS_SEARCH_FILE="DataProc_*"
-INCREMENT_FILE_NAME="DataProc_Inc"
-INCREMENT_FILE_DIR=/opt/wanghb/Run/BomcServer/log/inc/inc_log
+LOG_DIR=/DEVHome/wanghb/inc_log
+LS_SEARCH_FILE="*.log"
+INCREMENT_FILE_NAME="log_Inc"
+INCREMENT_FILE_DIR=/DEVHome/wanghb/inc_log/inc_log
 
 COLLECT_CYCLE=300
 IS_SAVE_INC=y
@@ -20,7 +20,11 @@ FIRST_TIME=no
 SHELL_WORK_DIR=`pwd`
 THIS_SCRIPT_CONFIG=$SHELL_WORK_DIR/log.config
 THIS_SCRIPT_CONFIG_TMP=$SHELL_WORK_DIR/log.config.tmp
+SYSTEM_OS=`uname -a | awk '{print $1}'`
 
+if [ $SYSTEM_OS = "SunOS" ]; then
+	PATH=$PATH:$SHELL_WORK_DIR/bin
+fi
 
 ### 获取 增量数据文件名
 CUR_SYS_TIME=`date +'%Y%m%d%H%M%S'`
@@ -126,11 +130,27 @@ do
 	#echo $filedate
 	filetime=`stat $line | grep Modify | awk '{split($3,var,".");print var[1]}'`
 	#echo $filetime
-	file_datetime=`date -d "$filedate $filetime" +%s`
+
+	# 获取文件最后修改时间
+	if [ $SYSTEM_OS = "Linux" ]; then
+		file_datetime=`date -d "$filedate $filetime" +%s`
+	elif [ $SYSTEM_OS = "SunOS" ]; then
+		file_datetime=`wdate "$filedate $filetime"`
+	else
+		echo "NO Support System OS, update this script first please! exit."
+		exit
+	fi
 	#echo $file_datetime
 
 	# 获取当前时间
-	current_datetime=`date +%s`
+	if [ $SYSTEM_OS = "Linux" ]; then
+		current_datetime=`date +%s`
+	elif [ $SYSTEM_OS = "SunOS" ]; then
+		current_datetime=`wdate -c`
+	else
+		echo "NO Support System OS, update this script first please! exit."
+		exit
+	fi
 	#echo $current_datetime
 
 	# 当前时间 - 文件最修改时间
