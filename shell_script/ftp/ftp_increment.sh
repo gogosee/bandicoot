@@ -24,16 +24,19 @@ SYSTEM_OS=`uname -a | awk '{print $1}'`
 
 if [ $SYSTEM_OS = "SunOS" ]; then
 	PATH=$PATH:$SHELL_WORK_DIR/bin
-	TAIL=/usr/xpg4/bin/tail
-else
-	TAIL=tail
+#	TAIL=/usr/xpg4/bin/tail
+#else
+#	TAIL=tail
 fi
+TAIL=$SHELL_WORK_DIR/bin/wtail
+
 
 ### 获取 增量数据文件名
 CUR_SYS_TIME=`date +'%Y%m%d%H%M%S'`
 INCREMENT_FILE_NAME=$INCREMENT_FILE_NAME"."$CUR_SYS_TIME
 INCREMENT_FILE_PATH=$INCREMENT_FILE_DIR/$INCREMENT_FILE_NAME
 DEST_INCREMENT_FILE_TMPNAME=$INCREMENT_FILE_NAME".temp"
+REALLY_READ_SIZE_RECORD=$SHELL_WORK_DIR/.really_read_size.record
 #echo $INCREMENT_FILE_NAME
 
 
@@ -69,13 +72,26 @@ getIncrementData()
 		increment_size=`expr $cur_filesize - $cfg_filesize`		
 		# echo "increment_size:"$increment_size
 		# 读取增量部份, 写入增量文件
-		$TAIL -c $increment_size $filename >> $INCREMENT_FILE_PATH
+		#$TAIL -c $increment_size $filename >> $INCREMENT_FILE_PATH
+		$TAIL -e -f $filename -t $cfg_filesize -s $increment_size -r $REALLY_READ_SIZE_RECORD >> $INCREMENT_FILE_PATH
 
-		# 记录文件信息到新的配置文件
-		FILE_SIZE=$(ls -l $filename | awk '{print $5}')
+		# 获取新的文件信息，并且记录文件信息到新的配置文件
+		#FILE_SIZE=$(ls -l $filename | awk '{print $5}')
+		while read line 
+		do
+			READ_SIZE=`echo $line`
+		done < $REALLY_READ_SIZE_RECORD
+		# 配置文件中配置的文件大小 + 当前读到的数据量 == 当前文件大小
+		FILE_SIZE=`expr ${cfg_filesize} + ${READ_SIZE}`
+
+		#echo $increment_size
+		#echo $cfg_filesize
+		#echo $READ_SIZE
+		#echo $FILE_SIZE
+
 		echo $filename"|"$FILE_SIZE >> $THIS_SCRIPT_CONFIG_TMP
 	fi
-}   
+}
 
 
 ### 获取指定文件信息
