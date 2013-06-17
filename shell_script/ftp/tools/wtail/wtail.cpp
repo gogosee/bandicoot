@@ -9,12 +9,13 @@
 #include <errno.h>
 using namespace std;
 
+typedef long long int64;
 extern char 	*optarg;
 #define 	LOG_MAX_LINE_SIZE	4096
 
 char filename[128] = {0x0};		// 读取的文件名
-long tell_pos = 0;				// 读取文件的起始位置
-long read_size = 0;				// 读取文件的字节数
+int64 tell_pos = 0;				// 读取文件的起始位置
+int64 read_size = 0;				// 读取文件的字节数
 bool entire_row_flag = false;	// 是否读取整行
 bool result_flag = false;		// 是否保存实际读取的字节数
 char result_file[128] = {0x0};	// 保存实际读取的字节数
@@ -53,9 +54,11 @@ int InitArgv(int argc, char *argv[])
 				strncpy(filename, optarg, std::min(strlen(optarg), sizeof(filename)-1));
                 break;
             case 't':
-				tell_pos = atoi(optarg);
+				//tell_pos = atoi(optarg);
+				tell_pos = atoll(optarg);
             case 's':
-				read_size = atoi(optarg);
+				//read_size = atoi(optarg);
+				read_size = atoll(optarg);
                 break;
             case 'r':
 				result_flag = true;
@@ -96,8 +99,8 @@ int main(int argc, char *argv[])
 	ifs.open (filename, std::ifstream::in);
 	ifs.seekg (tell_pos);
 
-	int rsize = 0;
-	int need_size = 0;
+	int64 rsize = 0;
+	int64 need_size = 0;
 	while(ifs.getline(line, sizeof(line))) 
 	{
 		rsize += strlen(line) + 1;
@@ -134,7 +137,7 @@ int main(int argc, char *argv[])
 		std::ofstream ofs;
 		ofs.open(result_file, std::ofstream::binary);
 
-		snprintf(real_read_size, sizeof(real_read_size), "%d", need_size);
+		snprintf(real_read_size, sizeof(real_read_size), "%lld\n", need_size);
 		ofs.write (real_read_size, strlen(real_read_size));
 		ofs.close();
 	}
