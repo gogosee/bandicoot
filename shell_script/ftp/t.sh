@@ -1,0 +1,3 @@
+
+MYPATH=`pwd`
+echo $MYPATH
